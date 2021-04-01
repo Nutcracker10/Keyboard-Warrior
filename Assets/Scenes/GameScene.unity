@@ -1548,6 +1548,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Typer
       objectReference: {fileID: 0}
+    - target: {fileID: 4282453532218512618, guid: ec22468790067aa4280887d571b3a036,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4282453532218512621, guid: ec22468790067aa4280887d571b3a036,
         type: 3}
       propertyPath: m_RootOrder

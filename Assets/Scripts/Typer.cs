@@ -13,6 +13,9 @@ public class Typer : MonoBehaviour
     private AudioSource typing;
     private AudioSource returnSound;
 
+    public int score = 0;
+    public int multiplier = 1;
+
     private void Start() {
         setCurrentWord();
         AudioSource[] sound;
@@ -22,6 +25,7 @@ public class Typer : MonoBehaviour
     }
 
     private void setCurrentWord() {
+        Debug.Log("Word set");
         currentWord = wordBank.getWord();
         setRemainingWord(currentWord);
     }

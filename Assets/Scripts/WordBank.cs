@@ -28,7 +28,7 @@ public class WordBank : MonoBehaviour
 
    private List<string> loadFile() {
         //System.IO.StreamReader file = new System.IO.StreamReader(Application.dataPath + "/Dictionaries/medium.txt"); //load text file with data
-        string[] dict = System.IO.File.ReadAllLines(Application.dataPath + "/Dictionaries/hard.txt");
+        string[] dict = System.IO.File.ReadAllLines(Application.streamingAssetsPath + "/hard.txt");
         
         List<string> list = new List<string>(dict);
 
