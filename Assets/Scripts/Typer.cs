@@ -36,7 +36,7 @@ public class Typer : MonoBehaviour
     }
 
     private void checkInput() {
-        if (Input.anyKeyDown) {
+        if (Input.anyKeyDown && ( ! PauseMenu.gameIsPaused )) {
             string keysPressed = Input.inputString;
 
             if (keysPressed.Length == 1) {
