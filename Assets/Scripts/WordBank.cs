@@ -1,4 +1,5 @@
 using System.Linq;
+using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,10 +19,20 @@ public class WordBank : MonoBehaviour
 
    private void Awake() {
        //TODO use difficulty to set words
-       workingWords.AddRange(easyWords);
+       hardWords = loadFile(); 
+       workingWords.AddRange(hardWords);
        shuffle(workingWords);
        toLower(workingWords);
 
+   }
+
+   private List<string> loadFile() {
+        //System.IO.StreamReader file = new System.IO.StreamReader(Application.dataPath + "/Dictionaries/medium.txt"); //load text file with data
+        string[] dict = System.IO.File.ReadAllLines(Application.dataPath + "/Dictionaries/hard.txt");
+        
+        List<string> list = new List<string>(dict);
+
+        return list;
    }
 
     private void shuffle(List<string> list) {
