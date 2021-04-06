@@ -15,23 +15,43 @@ public class WordBank : MonoBehaviour
 
     };
 
+    private List<string> words = new List<string>() {};
+
     private List<string> workingWords = new List<string>();
 
-   private void Awake() {
-       //TODO use difficulty to set words
-       hardWords = loadFile(); 
-       workingWords.AddRange(hardWords);
-       shuffle(workingWords);
-       toLower(workingWords);
+    public enum Difficulties { Easy, Medium, Hard};
+    public static Difficulties difficulty = Difficulties.Easy;
 
+   private void Awake() {
+       
+        switch(SettingsMenu.difficulty) {
+
+            case SettingsMenu.Difficulties.Easy:
+                words = loadFile("/easy.txt");
+                break;
+            
+            case SettingsMenu.Difficulties.Medium:
+                words = loadFile("/medium.txt");
+                break;
+
+            case SettingsMenu.Difficulties.Hard:
+                words = loadFile("/hard.txt");
+                break;
+
+            default:
+                words = loadFile("/easy.txt");
+                break;
+        }
+
+        workingWords.AddRange(words);
+        shuffle(workingWords);
+        toLower(workingWords);
    }
 
-   private List<string> loadFile() {
-        //System.IO.StreamReader file = new System.IO.StreamReader(Application.dataPath + "/Dictionaries/medium.txt"); //load text file with data
-        string[] dict = System.IO.File.ReadAllLines(Application.streamingAssetsPath + "/hard.txt");
-        
+// Loads word selection for player
+   private List<string> loadFile(string fileName) {
+        string[] dict = System.IO.File.ReadAllLines(Application.streamingAssetsPath + fileName);        
         List<string> list = new List<string>(dict);
-
         return list;
    }
 

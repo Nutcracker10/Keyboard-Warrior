@@ -11,7 +11,7 @@ sleep
 for
 yes
 up
-low
+able
 greet
 mag
 car

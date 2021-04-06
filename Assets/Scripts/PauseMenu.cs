@@ -40,4 +40,14 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame() {
         Application.Quit();
     }
+
+    public void TogglePause() {
+        if (gameIsPaused) {
+            gameIsPaused = false;
+            Time.timeScale = 1f;
+        } else {
+            gameIsPaused = true;
+            Time.timeScale = 0f;
+        }
+    }
 }
