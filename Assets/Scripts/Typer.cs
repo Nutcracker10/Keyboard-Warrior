@@ -13,66 +13,81 @@ public class Typer : MonoBehaviour
     private AudioSource typing;
     private AudioSource returnSound;
 
-    public int score = 0;
-    public int multiplier = 1;
+    public static int score;
+    public static int multiplier;
+
+    public static int health;
 
     private void Start() {
-        setCurrentWord();
+        
+        SetCurrentWord();
+
         AudioSource[] sound;
         sound = GetComponents<AudioSource>();
         typing = sound[0];
         returnSound = sound[1];
+
+        score = 0;
+        multiplier = 1;
+
+        health = 3;
     }
 
-    private void setCurrentWord() {
-        Debug.Log("Word set");
+    private void SetCurrentWord() {
         currentWord = wordBank.getWord();
-        setRemainingWord(currentWord);
+        SetRemainingWord(currentWord);
     }
 
-    private void setRemainingWord(string word) {
+    private void SetRemainingWord(string word) {
         remainingWord = word;
         wordOutput.text = remainingWord;
     }
 
     private void Update() {
-        checkInput();
+        CheckInput();
     }
 
-    private void checkInput() {
+    private void CheckInput() {
         if (Input.anyKeyDown && ( ! PauseMenu.gameIsPaused )) {
             string keysPressed = Input.inputString;
 
             if (keysPressed.Length == 1) {
-                enterLetter(keysPressed);
+                EnterLetter(keysPressed);
             }
             
         }
     }
 
-    private void enterLetter(string typedLetter) {
-        if (isCorrectLetter(typedLetter)) {
-            removeLetter();
+    private void EnterLetter(string typedLetter) {
+        if (IsCorrectLetter(typedLetter)) {
+            RemoveLetter();
             typing.Play();
 
-            if(isWordComplete() ) {
+            if(IsWordComplete() ) {
+                score += (100 * multiplier);
+
+                if (multiplier != 5) {
+                    multiplier++;
+                }
+
                 returnSound.Play();
-                setCurrentWord();
+                SetCurrentWord();
             }
+        } else {
+            multiplier = 1;
         }
     }
 
-    private bool isCorrectLetter(string letter) {
-        
+    private bool IsCorrectLetter(string letter) {
         return remainingWord.IndexOf(letter) == 0;
     }
 
-    private void removeLetter() {
+    private void RemoveLetter() {
         string newString = remainingWord.Remove(0,1);
-        setRemainingWord(newString);
+        SetRemainingWord(newString);
     }
 
-    private bool isWordComplete() {
+    private bool IsWordComplete() {
         return remainingWord.Length == 0;
     }
 }
