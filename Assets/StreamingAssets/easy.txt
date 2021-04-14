@@ -21,5 +21,5 @@ pen
 ink
 blood
 elf
-ork
+orc
 asset
