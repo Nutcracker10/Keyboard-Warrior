@@ -3,17 +3,14 @@ using UnityEngine.UI;
 
 public class ShowMultiplier : MonoBehaviour
 {
-    public static int multiplier;
     private Text multText;
 
     void Start() {
         multText = this.GetComponent<Text>();
-        multiplier = Typer.multiplier;
-        multText.text = "x" + multiplier;
+        multText.text = "x" + Typer.multiplier;
     }
 
     void Update() {
-        multiplier = Typer.multiplier;
-        multText.text= "x" + multiplier;
+        multText.text= "x" + Typer.multiplier;
     }
 }

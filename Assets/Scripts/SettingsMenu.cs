@@ -31,8 +31,6 @@ public class SettingsMenu : MonoBehaviour
                 difficulty = Difficulties.Easy;
                 break;
         }
-
-        Debug.Log(difficulty.ToString());
         
     }
 }

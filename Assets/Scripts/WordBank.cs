@@ -6,7 +6,6 @@ using UnityEngine;
 public class WordBank : MonoBehaviour
 {
     private List<string> easyWords = new List<string>() {
-        "Pancake", "Are", "Delicious"
     };
     private List<string> mediumWords = new List<string>() {
 
@@ -22,31 +21,34 @@ public class WordBank : MonoBehaviour
     public enum Difficulties { Easy, Medium, Hard};
     public static Difficulties difficulty = Difficulties.Easy;
 
-   private void Awake() {
-       
+    private string difficultyString;
+
+    private void Awake() {
         switch(SettingsMenu.difficulty) {
 
             case SettingsMenu.Difficulties.Easy:
-                words = loadFile("/easy.txt");
+                difficultyString = "/easy.txt";
                 break;
             
             case SettingsMenu.Difficulties.Medium:
-                words = loadFile("/medium.txt");
+                difficultyString = "/medium.txt";
                 break;
 
             case SettingsMenu.Difficulties.Hard:
-                words = loadFile("/hard.txt");
+                difficultyString = "/hard.txt";
                 break;
 
             default:
-                words = loadFile("/easy.txt");
+                difficultyString = "/easy.txt";
                 break;
         }
+
+        words = loadFile(difficultyString);
 
         workingWords.AddRange(words);
         shuffle(workingWords);
         toLower(workingWords);
-   }
+    }
 
 // Loads word selection for player
    private List<string> loadFile(string fileName) {
@@ -77,6 +79,15 @@ public class WordBank : MonoBehaviour
         if (workingWords.Count != 0) {
             newWord = workingWords.Last();
             workingWords.Remove(newWord);
+
+        } else if (workingWords.Count == 0) {
+            Debug.Log("Word reset triggered");
+            words = loadFile(difficultyString);
+
+            workingWords.AddRange(words);
+            shuffle(workingWords);
+            toLower(workingWords);
+            newWord = getWord();
         }
 
         return newWord;

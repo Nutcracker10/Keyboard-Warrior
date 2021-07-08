@@ -8,19 +8,20 @@ public class Typer : MonoBehaviour
 
     public WordBank wordBank = null;
     public Text wordOutput = null;
+    public LightningSpawn lightning;
+
+    public static int score;
+    public static int multiplier;
+    public static int health = 3;
+
     private string remainingWord = string.Empty;
     private string currentWord = string.Empty;
     private AudioSource typing;
     private AudioSource returnSound;
 
-    public static int score;
-    public static int multiplier;
-
-    public static int health;
-
     private void Start() {
         
-        SetCurrentWord();
+        //SetCurrentWord();
 
         AudioSource[] sound;
         sound = GetComponents<AudioSource>();
@@ -33,7 +34,7 @@ public class Typer : MonoBehaviour
         health = 3;
     }
 
-    private void SetCurrentWord() {
+    public void SetCurrentWord() {
         currentWord = wordBank.getWord();
         SetRemainingWord(currentWord);
     }
@@ -45,6 +46,11 @@ public class Typer : MonoBehaviour
 
     private void Update() {
         CheckInput();
+
+        if (health == 0) {  
+            FindObjectOfType<GameManager>().EndGame();
+        }
+
     }
 
     private void CheckInput() {
@@ -53,6 +59,8 @@ public class Typer : MonoBehaviour
 
             if (keysPressed.Length == 1) {
                 EnterLetter(keysPressed);
+            } else {
+                FindObjectOfType<CoLearner>().MadeMistake();
             }
             
         }
@@ -68,14 +76,24 @@ public class Typer : MonoBehaviour
 
                 if (multiplier != 5) {
                     multiplier++;
+
+                    if (multiplier == 5) {
+                        FindObjectOfType<CoLearner>().Compliment();
+                    }
                 }
 
                 returnSound.Play();
-                SetCurrentWord();
+                lightning.Fire();
+                
             }
         } else {
+            FindObjectOfType<CoLearner>().MadeMistake();
             multiplier = 1;
         }
+    }
+
+    public void SetWordToBlank() {
+        currentWord = "";
     }
 
     private bool IsCorrectLetter(string letter) {
@@ -90,4 +108,13 @@ public class Typer : MonoBehaviour
     private bool IsWordComplete() {
         return remainingWord.Length == 0;
     }
+
+    public string GetCurrentWord() {
+        return currentWord;
+    }
 }
+
+/*
+    Code partially inspired by VR with Andrew Typing Game tutorial
+    https://www.youtube.com/watch?v=j98a_X9G1fM&t=152s
+*/
